@@ -2,19 +2,17 @@ import React from 'react';
 import './Box.css';
 import { connect } from 'react-redux';
 
-let output; 
-function componentDidMount(props) {
-    if (props.letter.letter === "X" || props.letter.letter === "O")
-    output = props.letter.letter; 
-}
+
+
 
 function Box (props) {
-    componentDidMount(props);
     function handlePlayerClick(event) {
         let currentLetter;
         let tempValue;
         
-        if (props.value === true) {
+        //console.log(props);
+        
+        if (props.value) {
             currentLetter = "X";
             tempValue = false;
         } else {
@@ -32,14 +30,19 @@ function Box (props) {
             letter: currentLetter,
             value: tempValue
         };
-       
-        dispatch(action);
+        
+        if (props.letter.filled === false) {
+            dispatch(action);
+        }
     }
 
 
     return (
-        <div onClick={handlePlayerClick} className="singleBox">
-            <div id={props.boxId}>{output}</div>
+        <div>
+
+            <div onClick={handlePlayerClick} className="singleBox">
+                <div id={props.boxId}>{props.letter.letter}</div>
+            </div>
         </div>
     )
 }
